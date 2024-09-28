@@ -24,3 +24,25 @@ USE db;
 ```
 SHOW TABLES;
 ```
+
+---
+
+6. MySQLから出る
+```
+exit;
+```
+
+7. Dockerから出る
+```
+exit
+```
+
+8. Dockerを停止
+```
+docker compose down -v
+```
+
+9. Dockerのクリア
+```
+docker system prune -a
+```
