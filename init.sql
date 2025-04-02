@@ -1,18 +1,22 @@
+-- 文字コード設定
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+
 -- データベースとユーザーが存在する場合のみ削除
-DROP DATABASE IF EXISTS db;
+DROP DATABASE IF EXISTS handson;
 DROP USER IF EXISTS 'user'@'%';
 
 -- ユーザーの作成
 CREATE USER 'user'@'%' IDENTIFIED BY 'pass';
 
 -- データベースの作成
-CREATE DATABASE db;
+CREATE DATABASE handson CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- データベースの選択
-USE db;
+USE handson;
 
 -- ユーザーに権限を付与
-GRANT ALL PRIVILEGES ON db.* TO 'user'@'%';
+GRANT ALL PRIVILEGES ON handson.* TO 'user'@'%';
 
 -- usersテーブルの作成
 CREATE TABLE users (
@@ -20,7 +24,7 @@ CREATE TABLE users (
     name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     registration_date DATE NOT NULL
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- usersサンプルデータの挿入
 INSERT INTO users (name, email, registration_date) VALUES
@@ -36,7 +40,7 @@ INSERT INTO users (name, email, registration_date) VALUES
 CREATE TABLE categories (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 INSERT INTO categories (name) VALUES
 ('電子機器'), ('ファッション'), ('家電'), ('書籍'), ('スポーツ用品');
@@ -48,7 +52,7 @@ CREATE TABLE products (
     price DECIMAL(10, 2) NOT NULL,
     stock INT NOT NULL,
     FOREIGN KEY (category_id) REFERENCES categories(id)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 INSERT INTO products (name, category_id, price, stock) VALUES
 ('スマートフォン', 1, 80000, 50),
@@ -67,7 +71,7 @@ INSERT INTO products (name, category_id, price, stock) VALUES
 CREATE TABLE order_statuses (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 INSERT INTO order_statuses (name) VALUES
 ('新規注文'), ('配送済み'), ('キャンセル');
@@ -80,7 +84,7 @@ CREATE TABLE orders (
     status_id INT,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (status_id) REFERENCES order_statuses(id)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 INSERT INTO orders (user_id, order_date, status_id, total_amount) VALUES
 (1, '2023-06-01', 2, 95000),
@@ -108,7 +112,7 @@ CREATE TABLE order_details (
     price DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 INSERT INTO order_details (order_id, product_id, quantity, price) VALUES
 (1, 1, 1, 80000),
@@ -138,7 +142,6 @@ INSERT INTO order_details (order_id, product_id, quantity, price) VALUES
 (15, 9, 1, 1500),
 (15, 11, 1, 4000),
 (16, 12, 1, 3500);
-
 
 -- 変更を確定
 FLUSH PRIVILEGES;

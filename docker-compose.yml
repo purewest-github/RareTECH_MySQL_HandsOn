@@ -1,7 +1,25 @@
 services:
-  db:
-    image: mysql:8.0
+  mysql:
+    image: mysql:8.0.28
+    platform: linux/amd64
+    container_name: mysql-container
+    ports:
+      - "4036:3306"
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: handson
+      TZ: "Asia/Tokyo"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-container
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root  
+    ports:
+      - "8088:80"
+    depends_on:
+      - mysql
