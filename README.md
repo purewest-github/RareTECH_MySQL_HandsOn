@@ -7,7 +7,7 @@ docker compose up -d
 
 2. Dockerコンテナに入る
 ```
-docker compose exec db /bin/bash
+docker compose exec mysql /bin/bash
 ```
 
 3. MySQLに入る
